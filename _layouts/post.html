@@ -56,18 +56,37 @@ layout: default
 
 <div class="disqus-comments">
   <div id="disqus_thread"></div>
-  <script type="text/javascript">
-    /* <![CDATA[ */
-    var disqus_shortname = "{{ site.disqus_shortname }}";
-    var disqus_identifier = "{{ site.url }}_{{ page.title }}";
-    var disqus_title = "{{ page.title }}";
+  <script>
+    (function () {
+      var disqus_shortname  = "{{ site.disqus_shortname }}";
+      var disqus_identifier = "{{ site.url }}_{{ page.title | strip_html }}";
+      var disqus_title      = "{{ page.title | strip_html }}";
+      var loaded = false;
 
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      function loadDisqus() {
+        if (loaded) return;
+        loaded = true;
+        window.disqus_shortname  = disqus_shortname;
+        window.disqus_identifier = disqus_identifier;
+        window.disqus_title      = disqus_title;
+        var dsq  = document.createElement('script');
+        dsq.async = true;
+        dsq.src   = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.head || document.body).appendChild(dsq);
+      }
+
+      var target = document.getElementById('disqus_thread');
+      if ('IntersectionObserver' in window && target) {
+        var io = new IntersectionObserver(function (entries) {
+          if (entries.some(function (e) { return e.isIntersecting; })) {
+            loadDisqus();
+            io.disconnect();
+          }
+        }, { rootMargin: '400px' });
+        io.observe(target);
+      } else {
+        loadDisqus();
+      }
     })();
-    /* ]]> */
   </script>
 </div>

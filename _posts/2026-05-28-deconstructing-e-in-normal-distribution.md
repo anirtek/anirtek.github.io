@@ -19,7 +19,17 @@ To understand why it is in the normal distribution formula, let's zoom in on the
 
 $$e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}$$
 
-### How *e* Creates the Bell Curve
+---
+
+## How do you pronounce "Euler"?
+
+It is pronounced **"Oiler"** (rhymes with "boiler").
+
+Even though it looks like it should be pronounced "Yoo-ler" in English, his name is Swiss-German. In German, the "eu" vowel combination makes an "oy" sound. So, whenever you see Euler's number (*e*), Euler's formula, or Eulerian graphs in your math and engineering work, just think of someone who oils machinery!
+
+---
+
+## How *e* Creates the Bell Curve
 
 The magic of the normal distribution's shape comes entirely from how *e* reacts to that negative, squared exponent.
 
@@ -28,21 +38,15 @@ The magic of the normal distribution's shape comes entirely from how *e* reacts 
 
 In math, a negative exponent means you are dividing (for example, $e^{-2}$ is the exact same as $\frac{1}{e^2}$). So, as you move further from the center, you are raising *e* (2.71828...) to a larger and larger power in the denominator. This causes the value of the function to decay exponentially toward zero, but never quite reach it.
 
-### Why specifically *e* and not 10 or 2?
+---
+
+## Why specifically *e* and not 10 or 2?
 
 You could technically draw a bell-shaped curve using 10 or 2 as the base instead of *e*. However, *e* is unique because its rate of change (its derivative) is perfectly proportional to its current value.
 
 When Gauss and Laplace were deriving the mathematics of probability and how random errors cluster around an average, the calculus naturally resolved into *e*. Using *e* makes all the subsequent calculus—like finding the area under the curve (the integral) to get those 68% or 95% probabilities—mathematically elegant and workable.
 
 > **In short:** *e* acts as the engine of exponential decay, perfectly smoothing out the slopes of the bell curve as you move away from the average.
-
----
-
-## How do you pronounce "Euler"?
-
-It is pronounced **"Oiler"** (rhymes with "boiler").
-
-Even though it looks like it should be pronounced "Yoo-ler" in English, his name is Swiss-German. In German, the "eu" vowel combination makes an "oy" sound. So, whenever you see Euler's number (*e*), Euler's formula, or Eulerian graphs in your math and engineering work, just think of someone who oils machinery!
 
 ---
 
