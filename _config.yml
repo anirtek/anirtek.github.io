@@ -43,6 +43,8 @@ urls:
       url: /category/machine-learning/
     - text: Backend Development
       url: /category/backend-development/
+    - text: "Beginner's Mathematical Curiosity (जिज्ञासा)"
+      url: /category/mathematical-curiosity/
     - text: XML Feed
       url: /feed.xml
 
