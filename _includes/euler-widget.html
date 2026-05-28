@@ -1,0 +1,107 @@
+<script>
+  if (!window.Chart) {
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+    document.head.appendChild(s);
+  }
+</script>
+
+<div class="euler-widget" style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #fff; margin: 1.5em 0;">
+  <h4 style="margin-top: 0;">Convergence of Compound Interest to <i>e</i></h4>
+
+  <div style="margin-bottom: 20px;">
+    <label for="n-slider" style="font-weight: bold;">
+      Compounding Frequency (n): <span id="n-display" style="color: #007bff;">1 (Yearly)</span>
+    </label><br>
+    <input type="range" id="n-slider" min="1" max="365" value="1" style="width: 100%;">
+    <p style="margin: 5px 0 0 0; font-family: monospace; font-size: 14px;">
+      Total = $<span id="total-display">2.00000</span>
+    </p>
+  </div>
+
+  <canvas id="eulerChart" width="400" height="200"></canvas>
+</div>
+
+<script>
+(function () {
+  function init() {
+    if (!window.Chart) {
+      return setTimeout(init, 50);
+    }
+
+    var slider       = document.getElementById('n-slider');
+    var nDisplay     = document.getElementById('n-display');
+    var totalDisplay = document.getElementById('total-display');
+    var canvas       = document.getElementById('eulerChart');
+    if (!slider || !canvas) {
+      return;
+    }
+    var ctx = canvas.getContext('2d');
+
+    var maxN         = 365;
+    var labels       = Array.from({ length: maxN }, function (_, i) { return i + 1; });
+    var compoundData = labels.map(function (n) { return Math.pow(1 + 1 / n, n); });
+    var eulerData    = new Array(maxN).fill(Math.E);
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Compound Interest (1 + 1/n)^n',
+            data: compoundData,
+            borderColor: '#007bff',
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.1
+          },
+          {
+            label: "Euler's Number (e = 2.718...)",
+            data: eulerData,
+            borderColor: '#dc3545',
+            borderWidth: 2,
+            borderDash: [5, 5],
+            pointRadius: 0,
+            fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: { title: { display: true, text: 'Frequency (n)' } },
+          y: { min: 1.8, max: 2.8, title: { display: true, text: 'Total Value ($)' } }
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function (context) { return '$' + context.parsed.y.toFixed(5); }
+            }
+          }
+        }
+      }
+    });
+
+    slider.addEventListener('input', function () {
+      var n     = parseInt(this.value, 10);
+      var total = Math.pow(1 + 1 / n, n);
+
+      var frequencyLabel = String(n);
+      if (n === 1)   frequencyLabel += ' (Yearly)';
+      if (n === 12)  frequencyLabel += ' (Monthly)';
+      if (n === 52)  frequencyLabel += ' (Weekly)';
+      if (n === 365) frequencyLabel += ' (Daily)';
+
+      nDisplay.textContent     = frequencyLabel;
+      totalDisplay.textContent = total.toFixed(5);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
